@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Dremnors-Rpg">
+    <output-path>$PROJECT_DIR$/classes/artifacts/Dremnors_Rpg</output-path>
+    <root id="archive" name="Dremnors-Rpg.jar">
+      <element id="module-output" name="DremnorsRPG" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/plugin.yml" />
+    </root>
+  </artifact>
+</component>

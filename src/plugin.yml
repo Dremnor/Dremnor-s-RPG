@@ -1,0 +1,12 @@
+name: DremnorsRPG
+version: 0.1
+load: STARTUP
+author: Dremnor
+main: me.dremnor.dremnorsrpg.Main
+description: Lvl system plugin
+api-version: 1.16
+
+commands:
+  drpg:
+   description: DremnorsRpg main command
+
