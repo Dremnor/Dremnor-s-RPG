@@ -14,6 +14,17 @@ public class Enums {
 	    RARE,
 	    LEGENDARY
 	}
+
+	public static enum CustomeEnchants {
+		Fortuna,
+		Power,
+		Gardening,
+		Explosion,
+		Telepathy,
+		Durable,
+		Yeld
+
+	}
 	
 	public static enum ItemType {
 		AXE,
