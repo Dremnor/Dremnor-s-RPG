@@ -2,7 +2,6 @@ package me.dremnor.dremnorsrpg.expgain;
 
 import java.util.HashMap;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import me.dremnor.dremnorsrpg.misc.Enums;
 import me.dremnor.dremnorsrpg.tools.Axe;
 import me.dremnor.dremnorsrpg.tools.Hoe;
@@ -26,7 +25,6 @@ import org.bukkit.persistence.PersistentDataType;
 import me.dremnor.dremnorsrpg.Main;
 import me.dremnor.dremnorsrpg.crafting.CraftingItems;
 import me.dremnor.dremnorsrpg.crafting.ItemGenerator;
-import me.dremnor.dremnorsrpg.enchants.EnchantEffects;
 
 
 public class ItemExprience implements Listener{
@@ -80,7 +78,10 @@ public class ItemExprience implements Listener{
 		if(CraftingItems.craftable.contains(item)) {
 			ItemMeta itemMeta = e.getPlayer().getInventory().getItemInMainHand().getItemMeta();
 			PersistentDataContainer storage =  itemMeta.getPersistentDataContainer();
-			Enums.ItemType itemType = Enums.ItemType.valueOf(storage.get(new NamespacedKey(Main.getPlugin(Main.class), "Type"), PersistentDataType.STRING));
+			String type = storage.get(new NamespacedKey(Main.getPlugin(Main.class), "Type"), PersistentDataType.STRING);
+
+			Enums.ItemType itemType = Enums.ItemType.valueOf(type);
+
 			plugin.getLogger().info("Zlapalem Block Break ! : "+itemType.toString() +"item type: "+e.getBlock().getType());
 			switch (itemType){
 				case AXE:

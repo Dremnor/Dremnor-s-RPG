@@ -22,8 +22,8 @@ public class Enums {
 		Explosion,
 		Telepathy,
 		Durable,
-		Yeld
-
+		Yeld,
+		Efficiency
 	}
 	
 	public static enum ItemType {

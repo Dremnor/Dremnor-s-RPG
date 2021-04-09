@@ -1,9 +1,12 @@
 package me.dremnor.dremnorsrpg;
 
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 
+import me.dremnor.dremnorsrpg.enchants.Efficiency;
+import me.dremnor.dremnorsrpg.enchants.Enchant;
 import me.dremnor.dremnorsrpg.misc.Enums;
 import me.dremnor.dremnorsrpg.tools.*;
 import org.bukkit.Material;
@@ -33,6 +36,7 @@ import me.dremnor.dremnorsrpg.skills.Vitality;
 public class Main extends JavaPlugin{
 	
 	public static HashMap<String,Skill> abilities;
+	public static HashMap<Enums.CustomeEnchants, Enchant> enchants;
 	public static HashMap<LivingEntity,BossBar> activebosses;
 
 	
@@ -66,6 +70,10 @@ public class Main extends JavaPlugin{
 																									600,650,700,750,800,850,900,950,1000,1050},200));
 		abilities.put("Thoughtness",new Thoughtness(this,"Thoughtness","Increase Player Deffence",new int[]{100,150,200,250,300,350,400,450,500,550,
 																									600,650,700,750,800,850,900,950,1000,1050},200));
+		//enchants init
+		enchants = new HashMap<Enums.CustomeEnchants, Enchant>();
+		enchants.put(Enums.CustomeEnchants.Efficiency,new Efficiency(Enums.CustomeEnchants.Efficiency,100,20, Arrays.asList(Enums.ItemType.AXE,Enums.ItemType.PICKAXE,Enums.ItemType.SHOVEL,Enums.ItemType.HOE)));
+
 		//init list
 		activebosses = new HashMap<LivingEntity,BossBar>();
 	}

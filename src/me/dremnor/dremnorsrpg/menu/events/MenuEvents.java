@@ -21,6 +21,8 @@ import me.dremnor.dremnorsrpg.menu.LearnMenu;
 import me.dremnor.dremnorsrpg.menu.MainMenu;
 import me.dremnor.dremnorsrpg.menu.UpgradeMenu;
 
+import java.awt.*;
+
 public class MenuEvents implements Listener{
 	
 	@SuppressWarnings("unused")
@@ -46,7 +48,8 @@ public class MenuEvents implements Listener{
 				if(meta.getPersistentDataContainer().has(new NamespacedKey(plugin, "Locked"),PersistentDataType.BYTE)) {
 					e.setCancelled(true);	
 				}
-				MainMenu.itemClicked(e.getCurrentItem(), (Player)e.getWhoClicked());
+				Main.getPlugin(Main.class).getLogger().info("sdfsdfsdf: event test");
+				EnchantMenu.itemClicked(e.getCurrentItem(), (Player)e.getWhoClicked(), e.getInventory());
 			}else {
 				
 			}			

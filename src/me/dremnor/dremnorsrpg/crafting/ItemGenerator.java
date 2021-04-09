@@ -62,8 +62,14 @@ public class ItemGenerator {
 		
 		meta.setLore(loreList);		
 		item.setItemMeta(meta);
+
 		return item;
 	}
+
+	public static void addEnchantLore(){
+
+	}
+
 	
 	public static ItemStack setItemStackName(ItemStack item,String name) {		
 		ItemMeta meta = item.getItemMeta();
@@ -146,6 +152,9 @@ public class ItemGenerator {
 				break;
 			case "chestplate":
 				storage.set(new NamespacedKey(plugin, "Type"), PersistentDataType.STRING, Enums.ItemType.CHESTPLATE.toString());
+				break;
+			case "sword":
+				storage.set(new NamespacedKey(plugin, "Type"), PersistentDataType.STRING, Enums.ItemType.SWORD.toString());
 				break;
 			default:
 				break;
