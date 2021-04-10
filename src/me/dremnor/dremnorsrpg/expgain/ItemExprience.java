@@ -2,6 +2,10 @@ package me.dremnor.dremnorsrpg.expgain;
 
 import java.util.HashMap;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import me.dremnor.dremnorsrpg.enchants.Enchant;
+import me.dremnor.dremnorsrpg.enchants.sub.Explosion;
 import me.dremnor.dremnorsrpg.misc.Enums;
 import me.dremnor.dremnorsrpg.tools.Axe;
 import me.dremnor.dremnorsrpg.tools.Hoe;
@@ -34,38 +38,8 @@ public class ItemExprience implements Listener{
 	public ItemExprience(Main plugin) {
 		this.plugin = plugin;
 		Bukkit.getPluginManager().registerEvents(this, plugin);
-		initExpMaps();
 	}
-	
-	HashMap<Material, Integer> pickaxeExp;
-	HashMap<Material, Integer> axeExp;
-	HashMap<Material, Integer> hoeExp;
-	HashMap<Material, Integer> swordExp;
-	
-	private void initExpMaps() {
-		pickaxeExp = new HashMap<Material, Integer>();
-		axeExp = new HashMap<Material, Integer>();
-		hoeExp = new HashMap<Material, Integer>();
-		swordExp = new HashMap<Material, Integer>();
-		
-		//pickaxe blocks		
-		pickaxeExp.put(Material.STONE, 1);
-		pickaxeExp.put(Material.COBBLESTONE, 1);
-		pickaxeExp.put(Material.COAL_ORE, 4);
-		pickaxeExp.put(Material.IRON_ORE, 8);
-		pickaxeExp.put(Material.GOLD_ORE, 16);
-		pickaxeExp.put(Material.DIAMOND_ORE, 32);
-		pickaxeExp.put(Material.DIORITE, 1);
-		pickaxeExp.put(Material.GRANITE, 1);
-		pickaxeExp.put(Material.ANDESITE, 1);
-		pickaxeExp.put(Material.EMERALD_ORE, 32);
-		pickaxeExp.put(Material.NETHER_QUARTZ_ORE, 16);
-		pickaxeExp.put(Material.NETHER_GOLD_ORE, 16);
-		
-	}
-	
-	
-	
+
 	@EventHandler
 	public boolean onBlockBreak(BlockBreakEvent e) {
 		
@@ -79,7 +53,11 @@ public class ItemExprience implements Listener{
 			ItemMeta itemMeta = e.getPlayer().getInventory().getItemInMainHand().getItemMeta();
 			PersistentDataContainer storage =  itemMeta.getPersistentDataContainer();
 			String type = storage.get(new NamespacedKey(Main.getPlugin(Main.class), "Type"), PersistentDataType.STRING);
-
+			HashMap<Enums.CustomeEnchants,Integer> enchants = null;
+			if(storage.has(new NamespacedKey(plugin,"Enchants"), PersistentDataType.STRING)){
+				String json = storage.get(new NamespacedKey(plugin,"Enchants"), PersistentDataType.STRING);
+				enchants = new Gson().fromJson(json, new TypeToken<HashMap<Enums.CustomeEnchants,Integer>>(){}.getType());
+			}
 			Enums.ItemType itemType = Enums.ItemType.valueOf(type);
 
 			plugin.getLogger().info("Zlapalem Block Break ! : "+itemType.toString() +"item type: "+e.getBlock().getType());
@@ -89,7 +67,17 @@ public class ItemExprience implements Listener{
 					ItemGenerator.updateItemLore(e.getPlayer().getInventory().getItemInMainHand(), plugin);
 					break;
 				case PICKAXE:
-					Pickaxe.addExpToTool(e.getPlayer().getInventory().getItemInMainHand(),e.getBlock().getType());
+					if( enchants != null && enchants.size()>0){
+						if(enchants.containsKey(Enums.CustomeEnchants.Explosion)){
+							Main.enchants.get(Enums.CustomeEnchants.Explosion).blockEffect(e.getPlayer().getInventory().getItemInMainHand(),e.getBlock(),e.getPlayer(),enchants.get(Enums.CustomeEnchants.Explosion));
+						}else{
+							Pickaxe.addExpToTool(e.getPlayer().getInventory().getItemInMainHand(),e.getBlock().getType());
+						}
+					}else{
+						Pickaxe.addExpToTool(e.getPlayer().getInventory().getItemInMainHand(),e.getBlock().getType());
+					}
+
+
 					ItemGenerator.updateItemLore(e.getPlayer().getInventory().getItemInMainHand(), plugin);
 					break;
 				case SHOVEL:
@@ -106,34 +94,4 @@ public class ItemExprience implements Listener{
 		}
 		return false;
 	}
-	
-
-	public void pickaxeCheck(Player p , Material block) {
-		ItemStack itemStack = p.getInventory().getItemInMainHand();
-		ItemMeta meta = itemStack.getItemMeta();
-		PersistentDataContainer storage = meta.getPersistentDataContainer();
-
-
-
-
-
-
-		if(storage.has(new NamespacedKey(plugin, "Exp"), PersistentDataType.INTEGER)) {
-			if(pickaxeExp.containsKey(block)) {
-				int exp = storage.get(new NamespacedKey(plugin, "Exp"), PersistentDataType.INTEGER);
-				exp+=pickaxeExp.get(block);
-				storage.set(new NamespacedKey(plugin, "Exp"), PersistentDataType.INTEGER, exp);
-			}
-			itemStack.setItemMeta(meta);
-			ItemGenerator.updateItemLore(itemStack, plugin);
-		}else{
-			p.getInventory().setItemInMainHand(ItemGenerator.createCraftableItem(p.getInventory().getItemInMainHand(), plugin, p));
-			pickaxeCheck(p , block);
-		}
-	}
-	
-	
-	
-	
-	
 }

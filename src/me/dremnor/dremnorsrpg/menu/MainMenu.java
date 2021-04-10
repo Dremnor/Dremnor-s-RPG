@@ -16,13 +16,15 @@ public class MainMenu {
 	//view settings
 	public static final String MENU_ITEM_NAME = ChatColor.BLUE+"Main Menu";
 	public static final String MENU_VIEW_NAME = ChatColor.DARK_BLUE+"Main Menu";
-	public static final int MENU_SIZE = 9;
+	public static final int MENU_SIZE = 18;
 	public static ItemStack FILLER_ITEM_STACK = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
 	
 	//buttons
 	public static final String MENU_STATS_BUTTON = ChatColor.DARK_RED+"Show Stats";
 	public static final String MENU_LEARN_BUTTON = ChatColor.DARK_RED+"Learn New Ability";
 	public static final String MENU_UPGRADE_BUTTON = ChatColor.DARK_RED+"Upgrade Ability";
+	public static final String MENU_ENCHANT_BUTTON = ChatColor.DARK_RED+"Enchant Item";
+	public static final String MENU_REFORGE_BUTTON = ChatColor.DARK_RED+"Reforge Item";
 	
 	public static Inventory getMenu(Player p) {
 		
@@ -49,13 +51,24 @@ public class MainMenu {
 		ItemMeta uMeta = Upgrade.getItemMeta();
 		uMeta.setDisplayName(MENU_UPGRADE_BUTTON);
 		Upgrade.setItemMeta(uMeta);
+
+		ItemStack Enchant = new ItemStack(Material.ENCHANTING_TABLE);
+		ItemMeta eMeta = Enchant.getItemMeta();
+		eMeta.setDisplayName(MENU_ENCHANT_BUTTON);
+		Enchant.setItemMeta(eMeta);
+
+		ItemStack Reforge = new ItemStack(Material.ANVIL);
+		ItemMeta rMeta = Reforge.getItemMeta();
+		rMeta.setDisplayName(MENU_REFORGE_BUTTON);
+		Reforge.setItemMeta(rMeta);
 		
 		
 		
 		inventory.setItem(2, Stats);
 		inventory.setItem(4, Learn);
 		inventory.setItem(6, Upgrade);
-		
+		inventory.setItem(12, Enchant);
+		inventory.setItem(14, Reforge);
 		
 		p.openInventory(inventory);
 		return null;		
@@ -74,6 +87,10 @@ public class MainMenu {
 		if(item.getItemMeta().getDisplayName().equals(MENU_UPGRADE_BUTTON)) {
 			UpgradeMenu.getMenu(p);
 		}
+		if(item.getItemMeta().getDisplayName().equals(MENU_ENCHANT_BUTTON)) {
+			EnchantMenu.getMenu(p);
+		}
+
 	}
 	
 	

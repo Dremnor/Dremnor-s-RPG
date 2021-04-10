@@ -130,7 +130,34 @@ public class EnchantMenu {
 			}
 			return false;
 		}
-		
+
+		public static void itemClicked(ItemStack item, Player p , Main plugin, Inventory i){
+			ItemMeta meta = item.getItemMeta();
+			if(Main.enchants.containsKey(Enums.CustomeEnchants.valueOf(meta.getDisplayName()))){
+				Gson gson = new Gson();
+				PersistentDataContainer storage = i.getItem(13).getItemMeta().getPersistentDataContainer();
+				HashMap<Enums.CustomeEnchants,Integer> enchants;
+
+				if(storage.has(new NamespacedKey(plugin,"Enchants"), PersistentDataType.STRING)){
+					String json = storage.get(new NamespacedKey(plugin,"Enchants"), PersistentDataType.STRING);
+					enchants = new Gson().fromJson(json, new TypeToken<HashMap<Enums.CustomeEnchants,Integer>>(){}.getType());
+				}else{
+					enchants = new HashMap<Enums.CustomeEnchants,Integer>();
+				}
+
+				if(enchants.containsKey(Enums.CustomeEnchants.valueOf(meta.getDisplayName()))){
+					Main.enchants.get(Enums.CustomeEnchants.valueOf(meta.getDisplayName())).upgradeEnchant(i.getItem(13),plugin);
+				}else{
+					Main.enchants.get(Enums.CustomeEnchants.valueOf(meta.getDisplayName())).setEnchant(i.getItem(13),plugin,p);
+				}
+
+			}
+
+
+
+		}
+
+
 		public static void itemMove(Inventory i) {
 			if(i.getItem(13) != null) {
 				if(CraftingItems.craftable.contains(i.getItem(13).getType())) {

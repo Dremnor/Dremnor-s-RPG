@@ -2,11 +2,14 @@ package me.dremnor.dremnorsrpg;
 
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 
-import me.dremnor.dremnorsrpg.enchants.Efficiency;
+import me.dremnor.dremnorsrpg.enchants.sub.Efficiency;
 import me.dremnor.dremnorsrpg.enchants.Enchant;
+import me.dremnor.dremnorsrpg.enchants.sub.Explosion;
+import me.dremnor.dremnorsrpg.enchants.sub.Fortuna;
 import me.dremnor.dremnorsrpg.menu.UpdateeEnchantInventroy;
 import me.dremnor.dremnorsrpg.misc.Enums;
 import org.bukkit.boss.BossBar;
@@ -77,6 +80,9 @@ public class Main extends JavaPlugin{
 		//enchants init
 		enchants = new HashMap<Enums.CustomeEnchants, Enchant>();
 		enchants.put(Enums.CustomeEnchants.Efficiency,new Efficiency(Enums.CustomeEnchants.Efficiency,100,20, Arrays.asList(Enums.ItemType.AXE,Enums.ItemType.PICKAXE,Enums.ItemType.SHOVEL,Enums.ItemType.HOE)));
+		enchants.put(Enums.CustomeEnchants.Fortuna,new Fortuna(Enums.CustomeEnchants.Fortuna,100,20, Arrays.asList(Enums.ItemType.AXE,Enums.ItemType.PICKAXE,Enums.ItemType.SHOVEL,Enums.ItemType.HOE)));
+		enchants.put(Enums.CustomeEnchants.Explosion,new Explosion(Enums.CustomeEnchants.Explosion,100,20, Collections.singletonList(Enums.ItemType.PICKAXE)));
+
 
 		//init list
 		activebosses = new HashMap<LivingEntity,BossBar>();

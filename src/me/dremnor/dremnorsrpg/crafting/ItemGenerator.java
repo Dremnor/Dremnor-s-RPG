@@ -3,6 +3,8 @@ package me.dremnor.dremnorsrpg.crafting;
 import java.util.*;
 
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import me.dremnor.dremnorsrpg.misc.Enums;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
@@ -44,20 +46,26 @@ public class ItemGenerator {
 			rarity = ChatColor.GOLD+rarity;
 			break;
 		}
-		
-		Map<Enchantment, Integer> enchMap = meta.getEnchants();
-		
 		List<String> loreList = new ArrayList<String>();
-	    for (Map.Entry<Enchantment, Integer> entry : enchMap.entrySet()) {
-	    	loreList.add(ChatColor.GOLD+me.dremnor.dremnorsrpg.misc.Enums.enchantNamesMap.get(entry.getKey().getKey()) + " Lv."+entry.getValue());
-	    }
-		
-		
+
 			
 		loreList.add(ChatColor.DARK_PURPLE+"Rarity: "+rarity);
 		loreList.add(ChatColor.DARK_PURPLE+"Level: "+level);
 		loreList.add(ChatColor.DARK_PURPLE+"Exp: "+exp);
 		loreList.add(ChatColor.DARK_PURPLE+"Crafted By: "+crafter);
+
+		// TODO enchant lore add
+		Gson gson = new Gson();
+		HashMap<Enums.CustomeEnchants,Integer> enchants;
+		if(storage.has(new NamespacedKey(plugin,"Enchants"), PersistentDataType.STRING)) {
+			String json = storage.get(new NamespacedKey(plugin, "Enchants"), PersistentDataType.STRING);
+			enchants = new Gson().fromJson(json, new TypeToken<HashMap<Enums.CustomeEnchants, Integer>>() {
+			}.getType());
+
+			for(Map.Entry<Enums.CustomeEnchants,Integer> e : enchants.entrySet()){
+				loreList.add(ChatColor.GOLD+e.getKey().toString()+" Lv."+e.getValue());
+			}
+		}
 
 		
 		meta.setLore(loreList);		
@@ -122,7 +130,7 @@ public class ItemGenerator {
 		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		storage.set(new NamespacedKey(plugin, "Level"), PersistentDataType.INTEGER, 1);
 		storage.set(new NamespacedKey(plugin, "Exp"), PersistentDataType.INTEGER, 0);
-		storage.set(new NamespacedKey(plugin, "Rarity"), PersistentDataType.STRING, Rarity.COMMON.name());
+		storage.set(new NamespacedKey(plugin, "Rarity"), PersistentDataType.STRING, Rarity.COMMON.toString());
 		storage.set(new NamespacedKey(plugin, "Crafter"), PersistentDataType.STRING, p.getName());
 
 		String type = itemStack.getType().toString().toLowerCase().split("_")[itemStack.getType().toString().toLowerCase().split("_").length-1];

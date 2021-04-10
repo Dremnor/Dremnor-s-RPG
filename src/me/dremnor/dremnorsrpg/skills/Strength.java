@@ -9,7 +9,6 @@ public class Strength extends Skill{
 
 	public Strength(Main plugin, String name, String description, int[] cost, int learncost) {
 		super(plugin, name, description, cost, learncost);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

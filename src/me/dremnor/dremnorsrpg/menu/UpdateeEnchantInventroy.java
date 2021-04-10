@@ -43,27 +43,4 @@ public class UpdateeEnchantInventroy {
 
 
     }
-
-
-
-
-
-
-
-    private void Update() {
-        Main.getPlugin(Main.class).getLogger().info("chodze w tle");
-        if(i.getViewers().size()==0){
-            Main.getPlugin(Main.class).getLogger().info("off bo nikt nie pacza");
-            Stop();
-        }
-
-        if(i.getItem(13)!= null &&!(lastItem == i.getItem(13))){
-            EnchantMenu.itemFound(i.getItem(13),(Player)i.getViewers().get(0), i);
-        }
-    }
-
-    public void Stop() {
-        id.cancel();
-    }
-
 }

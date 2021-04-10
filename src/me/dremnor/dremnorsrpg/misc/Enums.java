@@ -40,15 +40,4 @@ public class Enums {
 		
 	}
 	
-	
-	public static HashMap<NamespacedKey, String> enchantNamesMap = 
-		new  HashMap<NamespacedKey, String>(){{
-		    put(Enchantment.LOOT_BONUS_BLOCKS.getKey(), "Fortune");
-		    put(Enchantment.LOOT_BONUS_MOBS.getKey(), "Looting");
-		    put(Enchantment.DAMAGE_ALL.getKey(), "Sharpness");
-		    put(Enchantment.DIG_SPEED.getKey(), "Efficiency");
-		    put(Enchantment.LUCK.getKey(), "Luck of the Sea");
-		    
-		}};
-	
 }

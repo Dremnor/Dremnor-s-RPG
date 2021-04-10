@@ -47,7 +47,9 @@ public class MenuEvents implements Listener{
 				if(meta.getPersistentDataContainer().has(new NamespacedKey(plugin, "Locked"),PersistentDataType.BYTE)) {
 					e.setCancelled(true);	
 				}
-				//EnchantMenu.itemFound(e.getCurrentItem(), (Player)e.getWhoClicked(), e.getInventory());
+				if(e.getCurrentItem().getType() == Material.WRITTEN_BOOK){
+					EnchantMenu.itemClicked(e.getCurrentItem(),(Player)e.getWhoClicked(),plugin, e.getInventory());
+				}
 			}else {
 				
 			}			
