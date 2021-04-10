@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -20,8 +21,6 @@ import me.dremnor.dremnorsrpg.menu.EnchantMenu;
 import me.dremnor.dremnorsrpg.menu.LearnMenu;
 import me.dremnor.dremnorsrpg.menu.MainMenu;
 import me.dremnor.dremnorsrpg.menu.UpgradeMenu;
-
-import java.awt.*;
 
 public class MenuEvents implements Listener{
 	
@@ -35,7 +34,7 @@ public class MenuEvents implements Listener{
 	
 	@EventHandler
 	public boolean onMenuClick(InventoryClickEvent e) {
-		
+		plugin.getLogger().info("zlapalem click");
 		if(e.getView().getTitle().equals(MainMenu.MENU_VIEW_NAME)) {
 			if(e.getCurrentItem() != null)
 				MainMenu.itemClicked(e.getCurrentItem(), (Player)e.getWhoClicked());
@@ -48,8 +47,7 @@ public class MenuEvents implements Listener{
 				if(meta.getPersistentDataContainer().has(new NamespacedKey(plugin, "Locked"),PersistentDataType.BYTE)) {
 					e.setCancelled(true);	
 				}
-				Main.getPlugin(Main.class).getLogger().info("sdfsdfsdf: event test");
-				EnchantMenu.itemClicked(e.getCurrentItem(), (Player)e.getWhoClicked(), e.getInventory());
+				//EnchantMenu.itemFound(e.getCurrentItem(), (Player)e.getWhoClicked(), e.getInventory());
 			}else {
 				
 			}			
@@ -95,8 +93,14 @@ public class MenuEvents implements Listener{
 		if(e.getItem().getItemMeta().getDisplayName().equals(MainMenu.MENU_ITEM_NAME)) {
 			e.setCancelled(true);
 		}
-				
+		plugin.getLogger().info("zlapalem move item");
 		return false;		
+	}
+
+	@EventHandler
+	private boolean onInventoryInteract(InventoryInteractEvent e){
+		plugin.getLogger().info("zlapalem interazct");
+		return false;
 	}
 	
 	@EventHandler

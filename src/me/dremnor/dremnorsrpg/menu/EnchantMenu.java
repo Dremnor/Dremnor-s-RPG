@@ -63,42 +63,43 @@ public class EnchantMenu {
 			inventory.setItem(13, null);
 			
 			
-			
+
 			p.openInventory(inventory);
+			Main.openedInventory.put(inventory,new UpdateeEnchantInventroy(inventory));
 			return null;		
 		}
 		
-		public static void itemClicked(ItemStack item, Player p, Inventory i) {
+		public static boolean itemFound(ItemStack item, Player p, Inventory i) {
+			if(item == null){
+				ItemMeta meta = FILLER_ITEM_STACK.getItemMeta();
+				meta.setDisplayName(" ");
+				FILLER_ITEM_STACK.setItemMeta(meta);
+				FILLER_ITEM_STACK = ItemGenerator.setItemlocked(FILLER_ITEM_STACK,  Main.getPlugin(Main.class));
+				for(int s=36;s<MENU_SIZE;s++) {
+					i.setItem(s, FILLER_ITEM_STACK);
+				}
+			}
+
 			if(i.getItem(13) != null){
 				ItemStack itemupgrade = i.getItem(13);
 				ItemMeta meta = itemupgrade.getItemMeta();
 				PersistentDataContainer storage = meta.getPersistentDataContainer();
 				HashMap<Enums.CustomeEnchants,Integer> enchants;
 				Enums.ItemType type = null;
-				Main.getPlugin(Main.class).getLogger().info("test 1");
 				if(storage.has(new NamespacedKey(Main.getPlugin(Main.class),"Type"), PersistentDataType.STRING)){
-					Main.getPlugin(Main.class).getLogger().info("test 2");
 					type = Enums.ItemType.valueOf(storage.get(new NamespacedKey(Main.getPlugin(Main.class),"Type"), PersistentDataType.STRING));
 				}
-				Main.getPlugin(Main.class).getLogger().info("test 13)");
-				if(item!=i.getItem(13)){
-
-				}else
 				if(type != null){
-					Main.getPlugin(Main.class).getLogger().info("test 4");
 					if(storage.has(new NamespacedKey(Main.getPlugin(Main.class),"Enchants"), PersistentDataType.STRING)){
 						String json = storage.get(new NamespacedKey(Main.getPlugin(Main.class),"Enchants"), PersistentDataType.STRING);
 						enchants = new Gson().fromJson(json, new TypeToken<HashMap<Enums.CustomeEnchants,Integer>>(){}.getType());
-						Main.getPlugin(Main.class).getLogger().info("test 5");
 						int index = 36;
 						for(Map.Entry<Enums.CustomeEnchants, Enchant> entry : Main.enchants.entrySet()){
 		 				int lvl = -1;
 							if(enchants.containsKey(entry.getKey())){
 								lvl = enchants.get(entry.getKey());
-								Main.getPlugin(Main.class).getLogger().info("test 6");
 							}
 							if(entry.getValue().itemTypeList.contains(type)){
-								Main.getPlugin(Main.class).getLogger().info("test 7");
 								ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
 								book = ItemGenerator.setItemStackName(book,entry.getValue().name.toString());
 								book = ItemGenerator.setItemlocked(book,Main.getPlugin(Main.class));
@@ -112,12 +113,9 @@ public class EnchantMenu {
 							}
 						}
 					}else{
-						Main.getPlugin(Main.class).getLogger().info("test 8");
 						int index = 36;
 						for(Map.Entry<Enums.CustomeEnchants, Enchant> entry : Main.enchants.entrySet()){
-							Main.getPlugin(Main.class).getLogger().info("test 9");
 							if(entry.getValue().itemTypeList.contains(type)){
-								Main.getPlugin(Main.class).getLogger().info("test 10");
 								ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
 								book = ItemGenerator.setItemStackName(book,entry.getValue().name.toString());
 								book = ItemGenerator.setItemlocked(book,Main.getPlugin(Main.class));
@@ -130,6 +128,7 @@ public class EnchantMenu {
 					}
 				}
 			}
+			return false;
 		}
 		
 		public static void itemMove(Inventory i) {
@@ -151,3 +150,5 @@ public class EnchantMenu {
 		}
 		
 }
+
+

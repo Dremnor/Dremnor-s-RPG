@@ -7,12 +7,12 @@ import java.util.HashMap;
 
 import me.dremnor.dremnorsrpg.enchants.Efficiency;
 import me.dremnor.dremnorsrpg.enchants.Enchant;
+import me.dremnor.dremnorsrpg.menu.UpdateeEnchantInventroy;
 import me.dremnor.dremnorsrpg.misc.Enums;
-import me.dremnor.dremnorsrpg.tools.*;
-import org.bukkit.Material;
 import org.bukkit.boss.BossBar;
 
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 import me.dremnor.dremnorsrpg.commands.DrpgCommand;
 import me.dremnor.dremnorsrpg.crafting.CraftingItems;
@@ -38,11 +38,15 @@ public class Main extends JavaPlugin{
 	public static HashMap<String,Skill> abilities;
 	public static HashMap<Enums.CustomeEnchants, Enchant> enchants;
 	public static HashMap<LivingEntity,BossBar> activebosses;
+	public static HashMap<Inventory, UpdateeEnchantInventroy> openedInventory;
 
 	
 	@Override
 	public void onEnable() {
 		
+		//init maps
+		openedInventory = new HashMap<Inventory, UpdateeEnchantInventroy>();
+
 		//register commands
 		new DrpgCommand(this);
 		
