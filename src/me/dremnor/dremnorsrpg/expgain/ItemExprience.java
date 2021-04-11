@@ -1,6 +1,7 @@
 package me.dremnor.dremnorsrpg.expgain;
 
 import java.util.HashMap;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -69,7 +70,10 @@ public class ItemExprience implements Listener{
 				case PICKAXE:
 					if( enchants != null && enchants.size()>0){
 						if(enchants.containsKey(Enums.CustomeEnchants.Explosion)){
-							Main.enchants.get(Enums.CustomeEnchants.Explosion).blockEffect(e.getPlayer().getInventory().getItemInMainHand(),e.getBlock(),e.getPlayer(),enchants.get(Enums.CustomeEnchants.Explosion));
+							List<Block> blocks = Main.enchants.get(Enums.CustomeEnchants.Explosion).blockEffect(e.getPlayer().getInventory().getItemInMainHand(),e.getBlock(),e.getPlayer(),enchants.get(Enums.CustomeEnchants.Explosion));
+							for(Block b :  blocks){
+								Pickaxe.addExpToTool(e.getPlayer().getInventory().getItemInMainHand(),b.getType());
+							}
 						}else{
 							Pickaxe.addExpToTool(e.getPlayer().getInventory().getItemInMainHand(),e.getBlock().getType());
 						}

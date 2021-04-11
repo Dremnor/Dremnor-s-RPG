@@ -36,7 +36,8 @@ public class Enums {
 		CHESTPLATE,
 		LEGGINS,
 		BOOTS,
-		BOW
+		BOW,
+		BOSSDROP
 		
 	}
 	

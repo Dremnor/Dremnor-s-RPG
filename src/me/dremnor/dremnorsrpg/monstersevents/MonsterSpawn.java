@@ -30,6 +30,8 @@ import me.dremnor.dremnorsrpg.misc.GlobalMessage;
 public class MonsterSpawn implements Listener{
 	private Main plugin;
 	private List<String> bosseStrings = Arrays.asList(ChatColor.GOLD+""+ChatColor.BOLD+"Dark Lord");
+	private final int MAX_LEVEL = 50;
+
 	public MonsterSpawn(Main plugin) {
 		this.plugin = plugin;
 		Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -47,6 +49,10 @@ public class MonsterSpawn implements Listener{
 					Random r = new Random();
 					String name = entity.getType().name().toString().toUpperCase(); 
 					level = r.nextInt(level)+3;
+					if(level >MAX_LEVEL){
+						level = MAX_LEVEL;
+					}
+
 					if(entity.getType() == EntityType.ZOMBIE || entity.getType() == EntityType.SKELETON || entity.getType() == EntityType.SPIDER || entity.getType() == EntityType.CREEPER) {
 						((LivingEntity) entity).getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(((LivingEntity) entity).getHealth()+level*2);
 						((LivingEntity) entity).setHealth(((LivingEntity) entity).getHealth()+level*2);

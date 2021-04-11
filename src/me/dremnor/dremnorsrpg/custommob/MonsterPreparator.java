@@ -56,7 +56,7 @@ public class MonsterPreparator {
 		e.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(3);
 		PersistentDataContainer storage = e.getPersistentDataContainer();
 		storage.set(new NamespacedKey(plugin, "Level"), PersistentDataType.INTEGER, 60);
-		
+		storage.set(new NamespacedKey(plugin, "Boss"), PersistentDataType.STRING, "Dark Lord");
 		BossBar b = BossBarGenerator.createBossBar(plugin, e, e.getCustomName(), BarColor.BLUE, BarStyle.SOLID, 2000);
 		Main.activebosses.put(e,b);
 		int i = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> updatebar(e),1L,1L);

@@ -53,11 +53,21 @@ public class CraftingItems implements Listener{
 	
 	@EventHandler
 	public boolean onRecipeFormed(PrepareItemCraftEvent e) {
-		if(e.getInventory().getResult() != null)
-		if(craftable.contains(e.getInventory().getResult().getType()))  {
-			e.getInventory().setResult(ItemGenerator.createCraftableItem(new ItemStack(e.getInventory().getResult().getType()),plugin,(Player)e.getViewers().get(0)));
-			plugin.getLogger().info("Recipe Swap Done");
+		for(ItemStack i : e.getInventory().getMatrix()){
+			if(i != null){
+				if(craftable.contains(i.getType())){
+					e.getInventory().setResult(null);
+				}
+			}
 		}
+
+		if(e.getInventory().getResult() != null){
+			if(craftable.contains(e.getInventory().getResult().getType()))  {
+				e.getInventory().setResult(ItemGenerator.createCraftableItem(new ItemStack(e.getInventory().getResult().getType()),plugin,(Player)e.getViewers().get(0)));
+				plugin.getLogger().info("Recipe Swap Done");
+			}
+		}
+
 		return false;
 	}
 	
