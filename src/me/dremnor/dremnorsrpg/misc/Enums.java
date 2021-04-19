@@ -23,7 +23,8 @@ public class Enums {
 		Telepathy,
 		Durable,
 		Yeld,
-		Efficiency
+		Efficiency,
+		VeinMiner
 	}
 	
 	public static enum ItemType {
@@ -39,6 +40,12 @@ public class Enums {
 		BOW,
 		BOSSDROP
 		
+	}
+
+	public static enum Tickets{
+		DARK_LORD,
+		JELLYSTORM
+
 	}
 	
 }

@@ -63,7 +63,7 @@ public class ItemGenerator {
 			}.getType());
 
 			for(Map.Entry<Enums.CustomeEnchants,Integer> e : enchants.entrySet()){
-				loreList.add(ChatColor.GOLD+e.getKey().toString()+" Lv."+e.getValue());
+				loreList.add(ChatColor.GOLD+Main.enchants.get(e.getKey()).nameString+" Lv."+e.getValue());
 			}
 		}
 

@@ -1,6 +1,5 @@
 package me.dremnor.dremnorsrpg.menu;
 
-import java.beans.PersistenceDelegate;
 import java.util.*;
 
 import com.google.gson.Gson;
@@ -10,7 +9,6 @@ import me.dremnor.dremnorsrpg.misc.Enums;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -95,23 +93,26 @@ public class EnchantMenu {
 						enchants = new Gson().fromJson(json, new TypeToken<HashMap<Enums.CustomeEnchants,Integer>>(){}.getType());
 						int index = 36;
 						for(Map.Entry<Enums.CustomeEnchants, Enchant> entry : Main.enchants.entrySet()){
-		 				int lvl = -1;
-							if(enchants.containsKey(entry.getKey())){
-								lvl = enchants.get(entry.getKey());
-							}
-							if(entry.getValue().itemTypeList.contains(type)){
-								ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
-								book = ItemGenerator.setItemStackName(book,entry.getValue().name.toString());
-								book = ItemGenerator.setItemlocked(book,Main.getPlugin(Main.class));
-								if(lvl != -1){
-									book = ItemGenerator.setItemStackLore(book,Arrays.asList("Click to Aply Imbu.","Exp Cost: "+entry.getValue().cost*(lvl+1)));
-								}else{
-									book = ItemGenerator.setItemStackLore(book,Arrays.asList("Click to Aply Imbu.","Exp Cost: "+entry.getValue().cost));
+							if(entry.getValue().checkIfAllowed(itemupgrade)){
+								int lvl = -1;
+								if(enchants.containsKey(entry.getKey())){
+									lvl = enchants.get(entry.getKey());
 								}
-								i.setItem(index,book);
-								index++;
+								if(entry.getValue().itemTypeList.contains(type)){
+									ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
+									book = ItemGenerator.setItemStackName(book,entry.getValue().name.toString());
+									book = ItemGenerator.setItemlocked(book,Main.getPlugin(Main.class));
+									if(lvl != -1){
+										book = ItemGenerator.setItemStackLore(book,Arrays.asList("Click to Aply Enchant.","Exp Cost: "+entry.getValue().cost*(lvl+1)));
+									}else{
+										book = ItemGenerator.setItemStackLore(book,Arrays.asList("Click to Aply Enchant.","Exp Cost: "+entry.getValue().cost));
+									}
+									i.setItem(index,book);
+									index++;
+								}
 							}
 						}
+
 					}else{
 						int index = 36;
 						for(Map.Entry<Enums.CustomeEnchants, Enchant> entry : Main.enchants.entrySet()){
@@ -137,20 +138,26 @@ public class EnchantMenu {
 				Gson gson = new Gson();
 				PersistentDataContainer storage = i.getItem(13).getItemMeta().getPersistentDataContainer();
 				HashMap<Enums.CustomeEnchants,Integer> enchants;
-
+				p.sendMessage("1");
 				if(storage.has(new NamespacedKey(plugin,"Enchants"), PersistentDataType.STRING)){
 					String json = storage.get(new NamespacedKey(plugin,"Enchants"), PersistentDataType.STRING);
 					enchants = new Gson().fromJson(json, new TypeToken<HashMap<Enums.CustomeEnchants,Integer>>(){}.getType());
+					p.sendMessage("1.1");
 				}else{
 					enchants = new HashMap<Enums.CustomeEnchants,Integer>();
+					p.sendMessage("1.2");
 				}
-
+				p.sendMessage("2");
 				if(enchants.containsKey(Enums.CustomeEnchants.valueOf(meta.getDisplayName()))){
 					Main.enchants.get(Enums.CustomeEnchants.valueOf(meta.getDisplayName())).upgradeEnchant(i.getItem(13),plugin);
+					p.sendMessage("2.1");
 				}else{
 					Main.enchants.get(Enums.CustomeEnchants.valueOf(meta.getDisplayName())).setEnchant(i.getItem(13),plugin,p);
+					p.sendMessage("2.2");
 				}
 
+			}else{
+				p.sendMessage("Wrong enchant name");
 			}
 
 

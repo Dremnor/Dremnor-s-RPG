@@ -10,8 +10,10 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 
 public class Fortuna extends Enchant {
-    public Fortuna(Enums.CustomeEnchants name, int cost, int maxLvl, List<Enums.ItemType> itemTypeList) {
-        super(name, cost, maxLvl, itemTypeList);
+
+
+    public Fortuna(Enums.CustomeEnchants name, int cost, int maxLvl, String nameString, List<Enums.ItemType> itemTypeList, List<Enums.CustomeEnchants> forbidenPair) {
+        super(name, cost, maxLvl, nameString, itemTypeList, forbidenPair);
     }
 
     @Override

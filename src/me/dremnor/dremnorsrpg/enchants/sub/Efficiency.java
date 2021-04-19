@@ -11,8 +11,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 
 public class Efficiency extends Enchant {
-    public Efficiency(Enums.CustomeEnchants name, int cost, int maxLvl, List<Enums.ItemType> itemTypeList) {
-        super(name, cost, maxLvl, itemTypeList);
+
+
+    public Efficiency(Enums.CustomeEnchants name, int cost, int maxLvl, String nameString, List<Enums.ItemType> itemTypeList, List<Enums.CustomeEnchants> forbidenPair) {
+        super(name, cost, maxLvl, nameString, itemTypeList, forbidenPair);
     }
 
     @Override

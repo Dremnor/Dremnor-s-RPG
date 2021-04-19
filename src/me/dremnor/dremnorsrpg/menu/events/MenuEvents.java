@@ -52,7 +52,8 @@ public class MenuEvents implements Listener{
 				}
 			}else {
 				
-			}			
+			}
+
 		}
 		
 		if(e.getView().getTitle().equals(LearnMenu.MENU_VIEW_NAME)) {

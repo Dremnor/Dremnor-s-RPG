@@ -77,6 +77,14 @@ public class ItemExprience implements Listener{
 						}else{
 							Pickaxe.addExpToTool(e.getPlayer().getInventory().getItemInMainHand(),e.getBlock().getType());
 						}
+						if(enchants.containsKey(Enums.CustomeEnchants.VeinMiner)){
+							List<Block> blocks = Main.enchants.get(Enums.CustomeEnchants.VeinMiner).blockEffect(e.getPlayer().getInventory().getItemInMainHand(),e.getBlock(),e.getPlayer(),enchants.get(Enums.CustomeEnchants.VeinMiner));
+							for(Block b :  blocks){
+								Pickaxe.addExpToTool(e.getPlayer().getInventory().getItemInMainHand(),b.getType());
+							}
+						}else{
+							Pickaxe.addExpToTool(e.getPlayer().getInventory().getItemInMainHand(),e.getBlock().getType());
+						}
 					}else{
 						Pickaxe.addExpToTool(e.getPlayer().getInventory().getItemInMainHand(),e.getBlock().getType());
 					}

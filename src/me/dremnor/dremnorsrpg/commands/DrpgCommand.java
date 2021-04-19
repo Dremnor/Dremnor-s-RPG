@@ -3,6 +3,9 @@ package me.dremnor.dremnorsrpg.commands;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import me.dremnor.dremnorsrpg.crafting.CustomeItems;
+import me.dremnor.dremnorsrpg.misc.Enums;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
@@ -53,8 +56,9 @@ public class DrpgCommand implements CommandExecutor{
 				if(((Player)sender).hasPermission("dremnorsrpg.Admin")) {
 					//MonsterPreparator.prepareDarkLord(((Player)sender).getLocation());
 					//((Player)sender).getWorld().createExplosion(((Player)sender).getLocation(), 2,false,false,(Player)sender);
-					
-					EnchantMenu.getMenu((Player)sender);
+					((Player)sender).getInventory().addItem(CustomeItems.DARK_LORD_TICKET());
+					((Player)sender).getInventory().addItem(CustomeItems.JELLY_STORM_TICKET());
+					((Player)sender).getInventory().addItem(CustomeItems.DARK_LORD_BONE());
 				}
 				break;
 			default:

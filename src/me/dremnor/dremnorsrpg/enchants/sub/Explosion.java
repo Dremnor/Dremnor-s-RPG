@@ -5,6 +5,7 @@ import me.dremnor.dremnorsrpg.misc.Enums;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -13,13 +14,15 @@ import java.util.List;
 import java.util.Random;
 
 public class Explosion extends Enchant {
-    public Explosion(Enums.CustomeEnchants name, int cost, int maxLvl, List<Enums.ItemType> itemTypeList) {
-        super(name, cost, maxLvl, itemTypeList);
+
+
+    public Explosion(Enums.CustomeEnchants name, int cost, int maxLvl, String nameString, List<Enums.ItemType> itemTypeList, List<Enums.CustomeEnchants> forbidenPair) {
+        super(name, cost, maxLvl, nameString, itemTypeList, forbidenPair);
     }
 
     @Override
     public void effect(ItemStack item, int lvl) {
-
+        item.addUnsafeEnchantment(Enchantment.WATER_WORKER,1);
     }
 
     @Override
